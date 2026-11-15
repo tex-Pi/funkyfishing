@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Funky Fishing</title>
+</head>
+<body style="background-color: blue;">
+
+    <div id="bobber" style="width: 15px; height: 15px; background-color: rgb(255, 0, 0); border-radius: 50%; position: absolute; display: none; align-items: center; justify-content: center;">
+        <div style="background-color: rgb(0, 0, 0); width: 3px; height: 3px; border-radius: 50%;">
+        </div>
+    </div>
+
+    <div style="position: absolute; left: 50%; top: 80%; transform: translate(-50%); background-color: bisque; width:350px; height: 100px; display: flex; ">
+        <div style="margin-left: 10px;">
+            <h1 style="font-family: 'Papyrus', Copperplate, fantasy; font-weight: bold;"><span id="fish1"></span></h1>
+        </div>
+        <div  style=" margin-left: 50px">
+            <h1 style="font-family: 'Papyrus', Copperplate, fantasy; font-weight: bold;"><span id="fish2"></span></h1>
+        </div>
+        <div  style=" margin-left: 50px">
+            <h1 style="font-family: 'Papyrus', Copperplate, fantasy; font-weight: bold;"><span id="fish3"></span></h1>
+        </div>
+        <div  style=" margin-left: 50px">
+            <h1 style="font-family: 'Papyrus', Copperplate, fantasy; font-weight: bold;"><span id="fish4"></span></h1>
+        </div>
+        <div  style=" margin-left: 50px">
+            <h1 style="font-family: 'Papyrus', Copperplate, fantasy; font-weight: bold;"><span id="fish5"></span></h1>
+        </div>
+        <div  style=" margin-left: 50px">
+            <h1 style="font-family: 'Papyrus', Copperplate, fantasy; font-weight: bold;"><span id="fish6"></span></h1>
+        </div>
+    </div>
+
+    <div id="indicator" style="width: 50px; height: 50px; background-color: red;">
+
+    </div>
+
+
+    <script>
+        let x = 0;
+        let y = 0;
+        let fishTimeMin = 5000;
+        let fishTime = 5000
+        let casted = 0;
+        let fishOn = 0;
+        let fishCaught = 0;
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+        let fishcatOwned = 0;
+        let fishblobOwned = 0;
+        let cloudfishOwned = 0;
+        let gapplefishOwned = 0;
+        let kingfishOwned = 0;
+        let sunfishOwned = 0;
+
+
+
+        document.addEventListener('click', async function(event) {
+            
+            if (casted === 0) {
+                x = event.clientX;
+                y = event.clientY;
+
+                let myDiv = document.getElementById('bobber');
+                myDiv.style.display = 'flex';
+                myDiv.style.left = x + 'px';
+                myDiv.style.top = y + 'px';
+                fishTimeAdd = Math.floor(Math.random() * 20000);
+                fishTime = fishTimeMin + fishTimeAdd;
+                casted = 1;
+                await delay(fishTime);
+                fishOn = 1;
+                
+
+
+            } else if (casted === 1) {
+
+
+                let myDiv = document.getElementById('bobber');
+                myDiv.style.display = 'none';
+                if (fishOn === 1) {
+                    fishCaught = Math.floor(Math.random() * 75) + 1;
+
+                    if (fishCaught <= 25) {
+                    
+                        fishcatOwned += 1;
+                        document.getElementById('fish1').textContent = fishcatOwned;
+                        
+
+                    } else if (fishCaught <= 45) {
+
+                        fishblobOwned += 1;
+                        document.getElementById('fish2').textContent = fishblobOwned;
+
+
+                    } else if (fishCaught <= 60){
+
+                        sunfishOwned += 1;                        
+                        document.getElementById('fish3').textContent = sunfishOwned;
+
+
+                    } else if (fishCaught <= 70) {
+
+                        kingfishOwned += 1;
+                        document.getElementById('fish4').textContent = kingfishOwned;
+
+
+
+                    } else if (fishCaught <= 74) {
+
+                        gapplefishOwned += 1;
+
+                        document.getElementById('fish5').textContent = gapplefishOwned;
+
+
+                    } else if (fishCaught <= 75) {
+
+                        cloudfishOwned += 1;
+                        document.getElementById('fish6').textContent = cloudfishOwned;
+
+                    }
+
+                    
+                }
+
+                casted = 0;
+                fishOn = 0;
+            }
+
+        });
+
+        function fishChecker() {
+            
+            if (fishOn === 1) {
+
+                let indicator = document.getElementById('indicator');
+                indicator.style.backgroundColor = 'green';
+
+
+            } else if (fishOn === 0) {
+
+                let indicator = document.getElementById('indicator');
+                indicator.style.backgroundColor = 'red';
+
+            }
+
+
+        }
+
+        function updateInvetory() {
+
+        document.getElementById('fish1').textContent = fishcatOwned;
+        document.getElementById('fish2').textContent = fishblobOwned;
+        document.getElementById('fish3').textContent = sunfishOwned;
+        document.getElementById('fish4').textContent = kingfishOwned;
+        document.getElementById('fish5').textContent = gapplefishOwned;
+        document.getElementById('fish6').textContent = cloudfishOwned;
+        
+        }
+
+        setInterval(updateInvetory, 100)
+        setInterval(fishChecker, 100)
+    
+
+    </script>
+</body>
+</html>
